@@ -10,7 +10,11 @@ def GetProductStock(productID):
     cnx = mysql.connector.connect(user='root', host='127.0.0.1', password=content)
     cursor = cnx.cursor()
     cursor.execute('use store')
-    # check if productID is valid
+    cursor.execute("select Name from Product where Product_ID = " + str(productID) + "")
+    result = cursor.fetchall() 
+    if len(result) == 0:
+        print("\nNo Product Found\n")
+        return
     cursor.execute("SELECT Stock FROM Product Where Product_ID = " + str(productID))
     result = cursor.fetchall() 
     temp = result[0]

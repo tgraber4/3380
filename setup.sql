@@ -2,8 +2,8 @@ DROP DATABASE IF EXISTS Store;
 CREATE DATABASE IF NOT EXISTS Store;
 USE Store;
 
--- Table: PRODUCT
-CREATE TABLE PRODUCT (
+-- Product Table --
+CREATE TABLE Product (
     Product_ID INT NOT NULL AUTO_INCREMENT,
     Name VARCHAR(64) NOT NULL,
     Price DECIMAL(10, 2),
@@ -12,7 +12,7 @@ CREATE TABLE PRODUCT (
     PRIMARY KEY (Product_ID)
 );
 
--- Table: Employee
+-- Employee Table -- 
 CREATE TABLE Employee (
     Emp_ID INT NOT NULL AUTO_INCREMENT,
     FName VARCHAR(92) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE Employee (
     PRIMARY KEY (Emp_ID)
 );
 
--- Table: Phone Numbers
+-- Phone_Numbers Table --
 CREATE TABLE Phone_Numbers (
     Emp_ID INT NOT NULL,
     Phone_Numbers VARCHAR(15) NOT NULL,
@@ -34,16 +34,16 @@ CREATE TABLE Phone_Numbers (
     FOREIGN KEY (Emp_ID) REFERENCES Employee(Emp_ID)
 );
 
--- Table: Employee_Manager
+-- Employee_Manager Table --
 CREATE TABLE Employee_Manager (
     Emp_ID INT NOT NULL,
-    Mgr_SSN CHAR(9),
+    Mgr_ID INT,
     PRIMARY KEY (Emp_ID),
     FOREIGN KEY (Emp_ID) REFERENCES Employee(Emp_ID),
-    FOREIGN KEY (Mgr_SSN) REFERENCES Employee(SSN)
+    FOREIGN KEY (Mgr_ID) REFERENCES Employee(Emp_ID)
 );
 
--- Table: Transactions
+-- Transactions Table --
 CREATE TABLE Transactions (
     Transaction_ID INT NOT NULL AUTO_INCREMENT,
     Date DATE NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE Transactions (
     FOREIGN KEY (Emp_ID) REFERENCES Employee(Emp_ID)
 );
 
--- Table: Payments
+-- Payments Table --
 CREATE TABLE Payments (
     Payment_ID INT NOT NULL AUTO_INCREMENT,
     Transaction_ID INT NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE Payments (
     FOREIGN KEY (Transaction_ID) REFERENCES Transactions(Transaction_ID)
 );
 
--- Table: Check
+-- Check_Data Table --
 CREATE TABLE Check_Data (
     Payment_ID INT NOT NULL,
     Amount DECIMAL(10, 2) NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE Check_Data (
     FOREIGN KEY (Payment_ID) REFERENCES Payments(Payment_ID)
 );
 
--- Table: Card
+-- Card Table --
 CREATE TABLE Card (
     Payment_ID INT NOT NULL,
     Amount DECIMAL(10, 2) NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE Card (
     FOREIGN KEY (Payment_ID) REFERENCES Payments(Payment_ID)
 );
 
--- Table: Cash
+-- Cash Table --
 CREATE TABLE Cash (
     Payment_ID INT NOT NULL,
     Amount DECIMAL(10, 2) NOT NULL,
@@ -92,8 +92,8 @@ CREATE TABLE Cash (
     FOREIGN KEY (Payment_ID) REFERENCES Payments(Payment_ID)
 );
 
--- Table: PRODUCT_ORDER
-CREATE TABLE PRODUCT_ORDER (
+-- Product_Order Table --
+CREATE TABLE Product_Order (
     Order_ID INT NOT NULL AUTO_INCREMENT,
     Quantity INT NOT NULL,
     Price_Paid DECIMAL(10, 2),
@@ -108,7 +108,7 @@ CREATE TABLE PRODUCT_ORDER (
     FOREIGN KEY (Product_ID) REFERENCES PRODUCT(Product_ID)
 );
 
--- Table: Transactions_Contains_Product
+-- Transactions_Contains_Product Table --
 CREATE TABLE Transactions_Contains_Product (
     Transaction_ID INT NOT NULL,
     Product_ID INT NOT NULL,
@@ -149,15 +149,15 @@ INSERT INTO Phone_Numbers (Emp_ID, Phone_Numbers) VALUES
 (7, '555-789-0123'),
 (8, '555-890-1234');
 
-INSERT INTO Employee_Manager (Emp_ID, Mgr_SSN) VALUES
-(1, '789012345'),
-(2, '123456789'),
-(3, '123456789'),
-(4, '890123456'),
-(5, '234567890'),
-(6, '123456789'),
+INSERT INTO Employee_Manager (Emp_ID, Mgr_ID) VALUES
+(1, 7),
+(2, 1),
+(3, 1),
+(4, 8),
+(5, 2),
+(6, 1),
 (7, NULL),
-(8, '123456789');
+(8, 1);
 
 INSERT INTO Transactions (Date, Customer_Name, Emp_ID) VALUES
 ('2024-11-01', 'Michael Clark', 1),
