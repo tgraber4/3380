@@ -1,3 +1,6 @@
+Database and backend application for a store.
+
+
 Setup Instructions
 ------------------
 
